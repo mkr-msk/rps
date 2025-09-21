@@ -1,5 +1,6 @@
 let computerScore = 0;
 let humanScore = 0;
+let h3TotalScore = document.querySelector('#totalScore');
 
 function getComputerChoice() {
     const rand = Math.floor(Math.random() * 3);
@@ -14,6 +15,13 @@ function getComputerChoice() {
 function playRound(computerChoice, humanChoice) {
     // Status code: 0 - no winners, 1 - human win, 2 - pc win
     let result;
+    let h3ComputerChoice = document.querySelector('#computerChoice');
+    let h3HumanChoice = document.querySelector('#humanChoice');
+    let h3CurrentResult = document.querySelector('#currentResult');
+    let winner = '';
+
+    h3ComputerChoice.textContent = computerChoice;
+    h3HumanChoice.textContent = humanChoice;
 
     switch (humanChoice) {
         case 'rock': {
@@ -44,24 +52,26 @@ function playRound(computerChoice, humanChoice) {
 
     switch (result) {
         case 0: {
-            console.log(`Draw. ${humanChoice} and ${computerChoice}`); 
+            h3CurrentResult.textContent = `Draw.`;
             break;
         }
         case 1: {
-            console.log(`You win! ${humanChoice} beats ${computerChoice}`)
+            h3CurrentResult.textContent = `You win!`;
             humanScore += 1;
             break;
         }
         case 2: {
-            console.log(`You lose! ${computerChoice} beats ${humanChoice}`)
-            computerChoice += 1;
+            h3CurrentResult.textContent = `You lose!`;
+            computerScore += 1;
             break;
         }
     }
 
-    if (humanScore > computerScore) console.log('You are a winner!');
-    else if (humanScore < computerScore) console.log('You are a loser!');
-    else console.log('Draw.')
+    if (humanScore > computerScore) winner = 'You are a winner!';
+    else if (humanScore < computerScore) winner = 'You are a loser!';
+    else winner = 'Draw.';
+
+    h3TotalScore.textContent = `Computer: ${computerScore} | Player: ${humanScore} > ${winner}`;
 }
 
 document.addEventListener('click', (event) => {
